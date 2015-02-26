@@ -26,37 +26,39 @@ const (
 // Order options
 const (
 	OrderAsc  = "asc"
-	OrderDesc = "dsc"
+	OrderDesc = "desc"
 )
 
 // Movie represents the movies
 type Movie struct {
-	ID           int       `json:"id"`
-	ImdbID       string    `json:"imdb_code"`
-	Torrents     []Torrent `json:"torrents"`
-	Title        string    `json:"title"`
-	TitleLong    string    `json:"title_long"`
-	Year         int       `json:"year"`
-	Rating       float64   `json:"rating"`
-	Genres       []string  `json:"genres"`
-	State        string    `json:"state"`
-	Language     string    `json:"language"`
-	SmallCover   string    `json:"small_cover_image"`
-	MediumCover  string    `json:"medium_cover_image"`
-	DateUploaded int       `json:"date_uploaded_unix"`
+	DateUploaded     string    `json:"date_uploaded"`
+	DateUploadedUnix int       `json:"date_uploaded_unix"`
+	Genres           []string  `json:"genres"`
+	ID               int       `json:"id"`
+	ImdbID           string    `json:"imdb_code"`
+	Language         string    `json:"language"`
+	MediumCover      string    `json:"medium_cover_image"`
+	Rating           float64   `json:"rating"`
+	Runtime          int       `json:"runtime"`
+	SmallCover       string    `json:"small_cover_image"`
+	State            string    `json:"state"`
+	Title            string    `json:"title"`
+	TitleLong        string    `json:"title_long"`
+	Torrents         []Torrent `json:"torrents"`
+	Year             int       `json:"year"`
 }
 
 // Torrent represents the quality for a torrent
 type Torrent struct {
-	URL              string `json:"url"`
-	Hash             string `json:"hash"`
-	Torrent          string `json:"quality"`
-	Seeds            int    `json:"seeds"`
-	Peers            int    `json:"peers"`
-	Size             string `json:"size"`
-	SizeBytes        int    `json:"size_bytes"`
 	DateUploaded     string `json:"date_uploaded"`
 	DateUploadedUnix int    `json:"date_uploaded_unix"`
+	Hash             string `json:"hash"`
+	Peers            int    `json:"peers"`
+	Quality          string `json:"quality"`
+	Seeds            int    `json:"seeds"`
+	Size             string `json:"size"`
+	SizeBytes        int    `json:"size_bytes"`
+	URL              string `json:"url"`
 }
 
 // Data represents the data inside the response body
@@ -73,7 +75,6 @@ type Result struct {
 }
 
 func getMovieList(URL string) ([]Movie, error) {
-
 	resp, err := http.Get(URL)
 	if err != nil {
 		return nil, err
