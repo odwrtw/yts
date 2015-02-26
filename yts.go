@@ -11,6 +11,24 @@ import (
 // APIEndpoint
 const APIEndpoint = "https://yts.re/api/v2"
 
+// Sort options
+const (
+	SortByTitle     = "title"
+	SortByYear      = "year"
+	SortByRating    = "rating"
+	SortByPeers     = "peers"
+	SortBySeeds     = "seeds"
+	SortByDownload  = "download_count"
+	SortByLike      = "like_count"
+	SortByDateAdded = "date_added"
+)
+
+// Order options
+const (
+	OrderAsc  = "asc"
+	OrderDesc = "dsc"
+)
+
 // Movie represents the movies
 type Movie struct {
 	ID           int       `json:"id"`
@@ -78,11 +96,12 @@ func getMovieList(URL string) ([]Movie, error) {
 }
 
 // GetList gets a list of movies from a page number
-func GetList(pageNumber int) ([]Movie, error) {
+func GetList(pageNumber, minRating int, sort, order string) ([]Movie, error) {
 	v := url.Values{}
 	v.Set("limit", "50")
-	v.Set("sort_by", "seeds")
-	v.Set("minimum_rating", "6")
+	v.Set("sort_by", sort)
+	v.Set("order_by", order)
+	v.Set("minimum_rating", string(minRating))
 	v.Set("page", string(pageNumber))
 	URL := fmt.Sprintf("%s/list_movies.json?%s", APIEndpoint, v.Encode())
 	return getMovieList(URL)
