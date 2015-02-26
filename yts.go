@@ -11,20 +11,6 @@ import (
 // APIEndpoint
 const APIEndpoint = "https://yts.im/api/v2"
 
-// Errors handles mutliple errors
-type Errors struct {
-	errors []error
-}
-
-func (e Errors) Error() string {
-	ret := ""
-	for _, err := range e.errors {
-		ret = fmt.Sprintf("%s%s\n", ret, err)
-	}
-
-	return ret
-}
-
 // Movie represents the movies
 type Movie struct {
 	ID           int       `json:"id"`
