@@ -9,7 +9,7 @@ import (
 )
 
 // APIEndpoint
-const APIEndpoint = "https://yts.im/api/v2"
+const APIEndpoint = "https://yts.re/api/v2"
 
 // Movie represents the movies
 type Movie struct {
