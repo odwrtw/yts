@@ -9,7 +9,7 @@ import (
 )
 
 // APIEndpoint
-const APIEndpoint = "https://yts.re/api/v2"
+const APIEndpoint = "https://yts.to/api/v2"
 
 // Sort options
 const (
