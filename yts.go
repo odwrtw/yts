@@ -32,7 +32,7 @@ const (
 // Movie represents the movies
 type Movie struct {
 	DateUploaded     string    `json:"date_uploaded"`
-	DateUploadedUnix int       `json:"date_uploaded_unix"`
+	DateUploadedUnix int64     `json:"date_uploaded_unix"`
 	Genres           []string  `json:"genres"`
 	ID               int       `json:"id"`
 	ImdbID           string    `json:"imdb_code"`
@@ -51,7 +51,7 @@ type Movie struct {
 // Torrent represents the quality for a torrent
 type Torrent struct {
 	DateUploaded     string `json:"date_uploaded"`
-	DateUploadedUnix int    `json:"date_uploaded_unix"`
+	DateUploadedUnix int64  `json:"date_uploaded_unix"`
 	Hash             string `json:"hash"`
 	Peers            int    `json:"peers"`
 	Quality          string `json:"quality"`
