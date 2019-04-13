@@ -82,6 +82,10 @@ func getMovieList(URL string) ([]Movie, error) {
 	}
 	defer resp.Body.Close()
 
+	if resp.StatusCode != http.StatusOK {
+		return nil, fmt.Errorf("got error %d while getting movie list", resp.StatusCode)
+	}
+
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		return nil, err
