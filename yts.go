@@ -116,3 +116,23 @@ func Search(movieTitle string) ([]Movie, error) {
 	URL := fmt.Sprintf("%s/list_movies.json?%s", APIEndpoint, v.Encode())
 	return getMovieList(URL)
 }
+
+// Status returns an error if the YTS API is not responding correctly
+func Status() error {
+	v := url.Values{}
+	v.Set("limit", "1")
+	v.Set("sort_by", SortByPeers)
+	v.Set("order_by", OrderDesc)
+	v.Set("minimum_rating", "6")
+	URL := fmt.Sprintf("%s/list_movies.json?%s", APIEndpoint, v.Encode())
+
+	movies, err := getMovieList(URL)
+	if err != nil {
+		return err
+	}
+	if movies == nil || len(movies) == 0 {
+		return fmt.Errorf("no movies returned")
+	}
+
+	return nil
+}
