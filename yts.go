@@ -6,9 +6,10 @@ import (
 	"io/ioutil"
 	"net/http"
 	"net/url"
+	"strconv"
 )
 
-// APIEndpoint
+// APIEndpoint represents the API's endpoint
 const APIEndpoint = "https://yts.ag/api/v2"
 
 // Sort options
@@ -102,8 +103,8 @@ func GetList(pageNumber, minRating int, sort, order string) ([]Movie, error) {
 	v.Set("limit", "50")
 	v.Set("sort_by", sort)
 	v.Set("order_by", order)
-	v.Set("minimum_rating", string(minRating))
-	v.Set("page", string(pageNumber))
+	v.Set("minimum_rating", strconv.Itoa(minRating))
+	v.Set("page", strconv.Itoa(pageNumber))
 	URL := fmt.Sprintf("%s/list_movies.json?%s", APIEndpoint, v.Encode())
 	return getMovieList(URL)
 }
