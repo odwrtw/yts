@@ -7,6 +7,7 @@ import (
 	"net/http"
 	"net/url"
 	"strconv"
+	"time"
 )
 
 // APIEndpoint represents the API's endpoint
@@ -76,7 +77,10 @@ type Result struct {
 }
 
 func getMovieList(URL string) ([]Movie, error) {
-	resp, err := http.Get(URL)
+	var httpClient = &http.Client{
+		Timeout: time.Second * 10,
+	}
+	resp, err := httpClient.Get(URL)
 	if err != nil {
 		return nil, err
 	}
