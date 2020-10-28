@@ -138,7 +138,7 @@ func Status() error {
 	if err != nil {
 		return err
 	}
-	if movies == nil || len(movies) == 0 {
+	if len(movies) == 0 {
 		return fmt.Errorf("no movies returned")
 	}
 
