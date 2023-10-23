@@ -3,7 +3,7 @@ package yts
 import (
 	"encoding/json"
 	"fmt"
-	"io/ioutil"
+	"io"
 	"net/http"
 	"net/url"
 	"strconv"
@@ -90,7 +90,7 @@ func getMovieList(URL string) ([]Movie, error) {
 		return nil, fmt.Errorf("got error %d while getting movie list", resp.StatusCode)
 	}
 
-	body, err := ioutil.ReadAll(resp.Body)
+	body, err := io.ReadAll(resp.Body)
 	if err != nil {
 		return nil, err
 	}
