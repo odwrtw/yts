@@ -3,7 +3,6 @@ package yts
 import (
 	"encoding/json"
 	"fmt"
-	"io"
 	"net/http"
 	"net/url"
 	"strconv"
@@ -92,14 +91,8 @@ func getMovieList(v url.Values) ([]Movie, error) {
 		return nil, fmt.Errorf("got error %d while getting movie list", resp.StatusCode)
 	}
 
-	body, err := io.ReadAll(resp.Body)
-	if err != nil {
-		return nil, err
-	}
-
-	// Unmarshal the result
-	var result *Result
-	err = json.Unmarshal(body, &result)
+	var result Result
+	err = json.NewDecoder(resp.Body).Decode(&result)
 	if err != nil {
 		return nil, err
 	}
