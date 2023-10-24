@@ -76,11 +76,13 @@ type Result struct {
 	Data          Data   `json:"data"`
 }
 
-func getMovieList(URL string) ([]Movie, error) {
+func getMovieList(v url.Values) ([]Movie, error) {
+	endpoint := APIEndpoint + "/list_movies.json?" + v.Encode()
+
 	var httpClient = &http.Client{
 		Timeout: time.Second * 10,
 	}
-	resp, err := httpClient.Get(URL)
+	resp, err := httpClient.Get(endpoint)
 	if err != nil {
 		return nil, err
 	}
@@ -113,16 +115,14 @@ func GetList(pageNumber, minRating int, sort, order string) ([]Movie, error) {
 	v.Set("order_by", order)
 	v.Set("minimum_rating", strconv.Itoa(minRating))
 	v.Set("page", strconv.Itoa(pageNumber))
-	URL := fmt.Sprintf("%s/list_movies.json?%s", APIEndpoint, v.Encode())
-	return getMovieList(URL)
+	return getMovieList(v)
 }
 
 // Search searches movies
 func Search(movieTitle string) ([]Movie, error) {
 	v := url.Values{}
 	v.Set("query_term", movieTitle)
-	URL := fmt.Sprintf("%s/list_movies.json?%s", APIEndpoint, v.Encode())
-	return getMovieList(URL)
+	return getMovieList(v)
 }
 
 // Status returns an error if the YTS API is not responding correctly
@@ -132,9 +132,8 @@ func Status() error {
 	v.Set("sort_by", SortByPeers)
 	v.Set("order_by", OrderDesc)
 	v.Set("minimum_rating", "6")
-	URL := fmt.Sprintf("%s/list_movies.json?%s", APIEndpoint, v.Encode())
 
-	movies, err := getMovieList(URL)
+	movies, err := getMovieList(v)
 	if err != nil {
 		return err
 	}
